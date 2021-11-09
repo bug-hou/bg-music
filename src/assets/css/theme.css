@@ -1,0 +1,12 @@
+:root {
+  /* 标题颜色 */
+  --title-color: linear-gradient(to right, #2980b9, #6dd5fa, #ffffff);
+  /* 字体颜色 */
+  --font-color: rgb(246, 141, 208);
+  /* 背景颜色 */
+  --back-color: rgb(23, 26, 57);
+  /* 边框颜色 */
+  --border-color: rgb(114, 192, 246);
+  /* 选中的颜色 */
+  --select-color: #cff;
+}

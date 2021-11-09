@@ -32,6 +32,8 @@ textarea,
 menu {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  user-select: none;
 }
 header,
 footer,
@@ -155,4 +157,9 @@ a:hover {
 }
 body {
   user-select: none;
+}
+body,
+html {
+  height: 100%;
+  width: 100%;
 }
