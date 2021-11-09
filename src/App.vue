@@ -1,30 +1,22 @@
+<!-- App -->
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <div id="App"></div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+// 从下载的组件中导入函数
+import { defineComponent } from 'vue'
 
-#nav {
-  padding: 30px;
+// 自定义方法引入
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+// 自定义组件引入
+export default defineComponent({
+  name: 'App',
+  setup() {
+    return {}
   }
-}
+})
+</script>
+<style scoped lang="less">
+
 </style>
