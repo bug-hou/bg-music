@@ -8,6 +8,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     component: () => import("views/login/login.vue"),
+    children: [
+      {
+        path: "",
+        redirect: "/login/account",
+      },
+      {
+        path: "account",
+        component: () => import("views/login/children/account/account.vue"),
+      },
+      {
+        path: "email",
+        component: () => import("views/login/children/email/email.vue"),
+      },
+      {
+        path: "phone",
+        component: () => import("views/login/children/phone/phone.vue"),
+      },
+    ],
   },
 ];
 

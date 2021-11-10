@@ -1,26 +1,28 @@
-<!-- 定义input组件 -->
+<!-- 定义验证码组件 -->
 <template>
   <label v-bind="$attrs">
     <span>{{ title }}</span>
     <input
       :type="type"
       :value="modelValue"
-      @change="$emit('update:modelValue', $event.target?.value)"
+      @input="$emit('update:modelValue', $event.target?.value)"
     />
     <div class="checked"></div>
     <p class="verify" v-if="isVerify">{{ showErrorInfo }}</p>
+    <button @click="$emit('buttonClick')">{{ buttonInfo }}</button>
   </label>
 </template>
 
 <script lang="ts">
 // 从下载的组件中导入函数
 import { defineComponent, watch, ref } from "vue";
+import { stringifyQuery } from "vue-router";
 
 // 自定义方法引入
 
 // 自定义组件引入
 export default defineComponent({
-  name: "BgInput",
+  name: "BgCaptcha",
   props: {
     title: {
       required: true,
@@ -47,8 +49,12 @@ export default defineComponent({
         ];
       },
     },
+    buttonInfo: {
+      default: "获取验证码",
+      type: String,
+    },
   },
-  setup(props: any, { emit }) {
+  setup(props: any) {
     const showErrorInfo = ref("");
     if (props.isVerify) {
       watch(
@@ -62,10 +68,10 @@ export default defineComponent({
               return true;
             }
           });
+          console.log(currentState);
           if (currentState) {
             showErrorInfo.value = "";
           }
-          emit("accessVerify", currentState && props.modelValue != null);
         },
       );
     }
@@ -92,7 +98,7 @@ label {
     border: none;
     border-bottom: 3px solid var(--border-color);
     width: 70%;
-    height: 90%;
+    padding: 1.5px;
     font-size: 1.4rem;
     position: relative;
     &:focus + div {
@@ -110,10 +116,22 @@ label {
   .checked {
     position: absolute;
     border-bottom: 3px solid #0ff;
-    left: 25%;
-    top: 64%;
+    left: 27%;
+    top: 73%;
     width: 0;
     transition: all 1s linear;
+  }
+  button {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    background: rgba(0, 255, 255, 0.3);
+    font-weight: bold;
+    border: 2px solid var(--border-color);
+    position: absolute;
+    right: 5%;
+    top: 10%;
   }
 }
 </style>

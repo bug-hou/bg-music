@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-
 class Ajax {
   // 请求config文件
   private config: AxiosRequestConfig;
@@ -16,7 +15,7 @@ class Ajax {
     return this.axios.request({
       url,
       ...newConfig,
-    })
+    });
   }
   get(url: string, config: AxiosRequestConfig): any {
     const newConfig = this.merge(this.config, config);
@@ -26,14 +25,17 @@ class Ajax {
     const newConfig = this.merge(this.config, config);
     return this.axios.post(url, newConfig);
   }
-  private merge(newConfig: AxiosRequestConfig, oldConfig: AxiosRequestConfig): AxiosRequestConfig {
+  private merge(
+    newConfig: AxiosRequestConfig,
+    oldConfig: AxiosRequestConfig,
+  ): AxiosRequestConfig {
     return Object.assign({}, newConfig, oldConfig);
   }
   private requestSuccess(config: AxiosRequestConfig) {
     return config;
   }
   private requestFail(config: AxiosRequestConfig) {
-    console.warn("请求失败了~~")
+    console.warn("请求失败了~~");
     return config;
   }
   private responseSuccess(result: AxiosResponse) {
