@@ -21,6 +21,7 @@ import { defineComponent } from "vue";
 
 // 自定义组件引入
 export default defineComponent({
+  emits: ["update:modelValue"],
   name: "BgRadio",
   props: {
     modelValue: {

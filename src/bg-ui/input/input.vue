@@ -1,14 +1,19 @@
 <!-- 定义input组件 -->
 <template>
   <label v-bind="$attrs">
-    <span>{{ title }}</span>
+    <span class="title">{{ title }}</span>
     <input
-      :type="type"
+      :type="isShow ? 'text' : type"
       :value="modelValue"
-      @change="$emit('update:modelValue', $event.target?.value)"
+      @input="$emit('update:modelValue', $event.target?.value)"
     />
     <div class="checked"></div>
     <p class="verify" v-if="isVerify">{{ showErrorInfo }}</p>
+    <p
+      v-if="type == 'password'"
+      :class="['iconfont', isShow ? 'icon-chakan' : 'icon-buchakan']"
+      @click="$emit('buttonClick')"
+    ></p>
   </label>
 </template>
 
@@ -21,6 +26,7 @@ import { defineComponent, watch, ref } from "vue";
 // 自定义组件引入
 export default defineComponent({
   name: "BgInput",
+  emits: ["buttonClick", "update:modelValue", "accessVerify"],
   props: {
     title: {
       required: true,
@@ -47,6 +53,10 @@ export default defineComponent({
         ];
       },
     },
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props: any, { emit }) {
     const showErrorInfo = ref("");
@@ -67,6 +77,9 @@ export default defineComponent({
           }
           emit("accessVerify", currentState && props.modelValue != null);
         },
+        {
+          immediate: true,
+        },
       );
     }
     return {
@@ -84,7 +97,7 @@ label {
   align-items: center;
   position: relative;
   margin: 10px 0 20px;
-  span {
+  .title {
     font-size: 1.6rem;
     font-weight: bold;
   }
@@ -99,7 +112,7 @@ label {
       width: 70%;
     }
   }
-  p {
+  .verify {
     position: absolute;
     left: 25%;
     bottom: 0;
@@ -114,6 +127,13 @@ label {
     top: 64%;
     width: 0;
     transition: all 1s linear;
+  }
+  .iconfont {
+    position: absolute;
+    right: 5%;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 2rem;
   }
 }
 </style>

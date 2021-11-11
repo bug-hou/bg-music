@@ -1,4 +1,10 @@
 <!-- name -->
+<!-- 
+属性:
+（都是不必须传入的参数）title:按钮显示的文字,small:是否使用小按钮,backgroundColor:按钮背景颜色
+事件:
+buttonClick:点击事件(无参)
+ -->
 <template>
   <button
     @click="$emit('buttonClick')"
@@ -18,6 +24,7 @@ import { defineComponent } from "vue";
 
 // 自定义组件引入
 export default defineComponent({
+  emits: ["buttonClick"],
   name: "BgButton",
   props: {
     title: {

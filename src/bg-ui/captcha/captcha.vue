@@ -1,4 +1,12 @@
 <!-- 定义验证码组件 -->
+<!-- 
+属性:title:要是输入框的内容（必传）modelValue:要进行绑定的值（必传）
+type:类型，placeholder：没有值时显示的内容，isVerify:是否进行验证，verifyList:当verify为true时就必须传达，buttonInfo：button要显示的值
+
+事件:
+buttonClick
+
+ -->
 <template>
   <label v-bind="$attrs">
     <span>{{ title }}</span>
@@ -9,19 +17,21 @@
     />
     <div class="checked"></div>
     <p class="verify" v-if="isVerify">{{ showErrorInfo }}</p>
-    <button @click="$emit('buttonClick')">{{ buttonInfo }}</button>
+    <button @click="$emit('buttonClick')" :disabled="isDisable">
+      {{ buttonInfo }}
+    </button>
   </label>
 </template>
 
 <script lang="ts">
 // 从下载的组件中导入函数
 import { defineComponent, watch, ref } from "vue";
-import { stringifyQuery } from "vue-router";
 
 // 自定义方法引入
 
 // 自定义组件引入
 export default defineComponent({
+  emits: ["update:modelValue", "buttonClick"],
   name: "BgCaptcha",
   props: {
     title: {
@@ -52,6 +62,10 @@ export default defineComponent({
     buttonInfo: {
       default: "获取验证码",
       type: String,
+    },
+    isDisable: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props: any) {
@@ -132,6 +146,9 @@ label {
     position: absolute;
     right: 5%;
     top: 10%;
+  }
+  button[disabled] {
+    cursor: not-allowed;
   }
 }
 </style>

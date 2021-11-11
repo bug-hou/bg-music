@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import main from "@/views/main/main.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,6 +27,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("views/login/children/phone/phone.vue"),
       },
     ],
+  },
+  {
+    path: "/main",
+    component: main,
   },
 ];
 

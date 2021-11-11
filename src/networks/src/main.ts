@@ -8,7 +8,10 @@ class Ajax {
     this.config = config;
     // 添加全局请求拦截
     this.axios.interceptors.request.use(this.requestSuccess, this.requestFail);
-    this.axios.interceptors.response.use(this.responseSuccess);
+    this.axios.interceptors.response.use(
+      this.responseSuccess,
+      this.responseFail,
+    );
   }
   request(url: string, config: AxiosRequestConfig): any {
     const newConfig = this.merge(this.config, config);
@@ -40,6 +43,9 @@ class Ajax {
   }
   private responseSuccess(result: AxiosResponse) {
     return result.data;
+  }
+  private responseFail(result: AxiosResponse) {
+    return result;
   }
 }
 

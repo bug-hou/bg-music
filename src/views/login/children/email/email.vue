@@ -17,22 +17,34 @@
       :verifyList="passwordRegs"
       @accessVerify="(state:boolean)=>passwordVerify = state"
     ></BgInput>
-    <BgButton title="登录"></BgButton>
+    <BgButton title="登录" @buttonClick="submit"></BgButton>
+    <BgTootip
+      title="登录失败"
+      :isActive="tootip"
+      color="rgb(248, 144, 127)"
+    ></BgTootip>
   </div>
 </template>
 
 <script lang="ts">
 // 从下载的组件中导入函数;
 import { defineComponent, ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 // 自定义方法引入
 import { emailReg, simplePassword } from "@/globals/regexp.ts";
 
-import { setLocalCache } from "@/globals/localStorage.ts";
+import mixin from "../mixins/main";
 
 export default defineComponent({
   name: "login-entry",
   setup() {
+    const store = useStore();
+    const router = useRouter();
+    // 从mixin中获取网络请求
+    const { sendNetwork } = mixin("sendEmailLogin");
+
     // 绑定账号
     const email = ref("");
     // 绑定密码
@@ -42,10 +54,38 @@ export default defineComponent({
     const passwordVerify = ref(false);
     const usernameVerify = ref(false);
 
+    // 是否登录成功，没有成功，有提示框出现
+    const tootip = ref(false);
+
+    // 提交登录请求
+    const submit = () => {
+      console.log(passwordVerify.value, usernameVerify.value);
+      if (passwordVerify.value && usernameVerify.value) {
+        sendNetwork(email.value, password.value);
+      } else {
+        tootip.value = true;
+        setTimeout(() => {
+          tootip.value = false;
+        }, 2000);
+      }
+    };
+
+    // 监听是否登录成功，成功就跳转导main页面
+    watch(
+      () => store.state.login.isLogin,
+      (newValue) => {
+        if (newValue) {
+          router.push("/main");
+        } else {
+          tootip.value = true;
+        }
+      },
+    );
+
     const usernameRegs = [
       {
         rule: emailReg,
-        info: "电话号码类型错误~~",
+        info: "邮箱格式错误~~",
       },
     ];
     const passwordRegs = [
@@ -61,6 +101,8 @@ export default defineComponent({
       passwordRegs,
       passwordVerify,
       usernameVerify,
+      tootip,
+      submit,
     };
   },
 });

@@ -24,7 +24,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="less">
-@import url(//at.alicdn.com/t/font_2926546_m5de7bkoe6.css);
+@import url(//at.alicdn.com/t/font_2926546_n8nspn6q88g.css);
 #App {
   width: 100%;
   height: 100%;

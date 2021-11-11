@@ -9,4 +9,6 @@
   --border-color: rgb(114, 192, 246);
   /* 选中的颜色 */
   --select-color: #cff;
+  /* 提示框的颜色 */
+  --tootip-color: rgb(73, 88, 103);
 }
